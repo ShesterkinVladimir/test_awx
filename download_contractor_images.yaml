@@ -9,7 +9,7 @@
   - name: Log into Docker
     docker_login:
       user_name: shesterkinvladimir
-      password: ${{ secrets.PASSWORD }}
+      password: ${{ PASSWORD }}
   
   - name: Pull an image from repohub.ekassir.com
     docker_image:
