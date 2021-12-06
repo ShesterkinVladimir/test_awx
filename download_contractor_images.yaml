@@ -9,7 +9,7 @@
   - name: Pull an image from repohub.ekassir.com
     docker_image:
       name: "{{ item }}"
-      repository: localhost:5000
+      repository: 0.0.0.0:5000
       source: pull
     loop: "{{ lookup('file', 'input.yaml').splitlines() }}"
 
