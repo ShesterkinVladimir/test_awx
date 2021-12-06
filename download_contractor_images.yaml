@@ -1,0 +1,35 @@
+--- 
+
+- name: Download contractor images
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+
+  - name: Pull an image from repohub.ekassir.com
+    docker_image:
+      name: "{{ item }}"
+      source: pull
+    loop: "{{ lookup('file', 'input.yaml').splitlines() }}"
+
+  - name: Tag and push to artifactory.nsd.ru:18079
+    docker_image:
+      name: "{{ item }}"
+      repository: "shesterkinvladimir/{{ item }}"
+      push: yes
+      source: local
+    loop: "{{ lookup('file', 'input.yaml').splitlines() }}"
+
+  - name: Remove images without tag 
+    docker_image:
+      state: absent
+      name: "{{ item }}"
+    loop: "{{ lookup('file', 'input.yaml').splitlines() }}"
+
+  - name: Remove images with tag 
+    docker_image:
+      state: absent
+      name: "shesterkinvladimir/{{ item }}"
+    loop: "{{ lookup('file', 'input.yaml').splitlines() }}"
+
+
