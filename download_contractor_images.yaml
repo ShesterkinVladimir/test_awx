@@ -7,7 +7,7 @@
   tasks:
   
   - name: Pull an image from repohub.ekassir.com
-    community.docker.docker_image:
+    docker_image:
       name: "{{ item }}"
       source: pull
     loop: "{{ lookup('file', 'input.yaml').splitlines() }}"
